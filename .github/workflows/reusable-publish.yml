@@ -31,11 +31,11 @@ jobs:
       - name: Install deps
         working-directory: ./${{ inputs.package }}
         run: yarn install --frozen-lockfile
-      - name: Publish NPM pkg (${{ inputs.package }} - ${{ inputs.version }})
-        run: yarn publish --no-git-tag-version --new-version ${{ inputs.version }}
-        working-directory: ./${{ inputs.package }}
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      # - name: Publish NPM pkg (${{ inputs.package }} - ${{ inputs.version }})
+      #   run: yarn publish --no-git-tag-version --new-version ${{ inputs.version }}
+      #   working-directory: ./${{ inputs.package }}
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: Setup Python environment
         uses: actions/setup-python@v4
         with:
@@ -45,14 +45,14 @@ jobs:
         run: ./.github/scripts/generate_release_notes.sh ${{ inputs.package }}
         env:
           GH_TOKEN: ${{ github.token }}
-      - name: Create release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-          package: ${{ inputs.package }}
-          version: ${{ inputs.version }}
-        run: |
-          gh release create "$tag" \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="$package - $version" \
-              --notes="$RELEASE_NOTES"
+      # - name: Create release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     tag: ${{ github.ref_name }}
+      #     package: ${{ inputs.package }}
+      #     version: ${{ inputs.version }}
+      #   run: |
+      #     gh release create "$tag" \
+      #         --repo="$GITHUB_REPOSITORY" \
+      #         --title="$package - $version" \
+      #         --notes="$RELEASE_NOTES"
