@@ -1,12 +1,13 @@
 #!/bin/bash
 
 PACKAGE=$1
+echo "====================<>"
 
 echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
 echo "## All changes in $PACKAGE" >> $GITHUB_ENV
 echo "" >> $GITHUB_ENV
 echo $PACKAGE
-    echo "====================<>"
+echo "====================<>"
 
 PULL_REQUESTS=$(gh pr list --label $PACKAGE --state merged --json title,mergeCommit,number)
 
