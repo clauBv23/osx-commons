@@ -26,7 +26,9 @@ echo $PULL_REQUESTS | jq -r '.[] | @base64' | while read pull_request ; do
     echo $TITLE
 
     # if there is more than 1 tag, the pull request is already included in another release
+    echo $(git tag --contain $COMMIT)
     if [ $(git tag --contain $COMMIT | grep -i $PACKAGE | wc -l) -le 1 ]; then
+        echo "Adding $TITLE to release notes"
         echo "- $TITLE in #$NUMBER" >> $GITHUB_ENV
     fi
 done
@@ -37,4 +39,3 @@ echo "" >> $GITHUB_ENV
 echo "EOF" >> $GITHUB_ENV
 echo $GITHUB_ENV
 cat $GITHUB_ENV
-
