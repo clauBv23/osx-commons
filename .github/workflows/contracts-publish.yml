@@ -3,8 +3,9 @@ name: Contracts Publish
 on:
   workflow_dispatch:
   push:
-    tags:
-      - '*-contracts'
+    branch:
+      - main
+      - develop
 
 jobs:
   check_tag:
