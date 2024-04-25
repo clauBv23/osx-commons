@@ -1,7 +1,7 @@
 name: Contracts Publish
 
 on:
-  # pull_request:
+  workflow_dispatch:
   push:
     tags:
       - '*-contracts'
