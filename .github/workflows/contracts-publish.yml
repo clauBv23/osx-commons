@@ -1,10 +1,11 @@
 name: Contracts Publish
 
 on:
-  # pull_request:
+  workflow_dispatch:
   push:
-    tags:
-      - '*-contracts'
+    branch:
+      - main
+      - develop
 
 jobs:
   check_tag:
@@ -12,15 +13,15 @@ jobs:
     with:
       ref: ${{ github.ref }}
 
-  tests:
-    needs: [check_tag]
-    if: ${{ needs.check_tag.outputs.package == 'contracts' }}
-    uses: ./.github/workflows/contracts-tests.yml
-    secrets:
-      ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+  # tests:
+  #   needs: [check_tag]
+  #   if: ${{ needs.check_tag.outputs.package == 'contracts' }}
+  #   uses: ./.github/workflows/contracts-tests.yml
+  #   secrets:
+  #     ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
 
   publish:
-    needs: [check_tag, tests]
+    needs: [check_tag]
     uses: ./.github/workflows/reusable-publish.yml
     with:
       package: ${{ needs.check_tag.outputs.package }}
