@@ -14,9 +14,11 @@ echo "====================<>"
 
 PULL_REQUESTS=$(gh pr list --label $PACKAGE --state merged --json title,mergeCommit,number)
 
+echo $PULL_REQUESTS
+
 # convert to base64 so we only have one line per pull request that we iterate over
 echo $PULL_REQUESTS | jq -r '.[] | @base64' | while read pull_request ; do
-    echo "====================<>"
+    echo "--------------------------------------------------------------------------------"
     COMMIT=$(echo $pull_request | base64 -d | jq -r '.mergeCommit.oid')
     NUMBER=$(echo $pull_request | base64 -d | jq -r '.number')
     TITLE=$(echo $pull_request | base64 -d | jq -r '.title')
@@ -36,4 +38,5 @@ echo "==================================>"
 echo "" >> $GITHUB_ENV
 echo "EOF" >> $GITHUB_ENV
 echo $GITHUB_ENV
+cat $GITHUB_ENV
 
