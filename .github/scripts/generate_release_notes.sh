@@ -14,12 +14,18 @@ echo $PULL_REQUESTS | jq -r '.[] | @base64' | while read pull_request ; do
     NUMBER=$(echo $pull_request | base64 -d | jq -r '.number')
     TITLE=$(echo $pull_request | base64 -d | jq -r '.title')
 
+    echo $COMMIT
+    echo $NUMBER
+    echo $TITLE
+    
     # if there is more than 1 tag, the pull request is already included in another release
     if [ $(git tag --contain $COMMIT | grep -i $PACKAGE | wc -l) -le 1 ]; then
         echo "- $TITLE in #$NUMBER" >> $GITHUB_ENV
     fi
 done
+echo $GITHUB_ENV
 
+echo "==================================>"
 echo "" >> $GITHUB_ENV
 echo "EOF" >> $GITHUB_ENV
 echo $GITHUB_ENV
