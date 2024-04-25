@@ -1,5 +1,8 @@
 #!/bin/bash
 
+printf "Hello world\n"
+
+echo "====================<>"
 PACKAGE=$1
 echo "====================<>"
 
