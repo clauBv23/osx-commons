@@ -1,10 +1,10 @@
 name: Contracts Publish
 
 on:
-  pull_request:
-  # push:
-  #   tags:
-  #     - '*-contracts'
+  # pull_request:
+  push:
+    tags:
+      - '*-contracts'
 
 jobs:
   check_tag:
