@@ -10,6 +10,7 @@ PULL_REQUESTS=$(gh pr list --label $PACKAGE --state merged --json title,mergeCom
 
 # convert to base64 so we only have one line per pull request that we iterate over
 echo $PULL_REQUESTS | jq -r '.[] | @base64' | while read pull_request ; do
+    echo "====================<>"
     COMMIT=$(echo $pull_request | base64 -d | jq -r '.mergeCommit.oid')
     NUMBER=$(echo $pull_request | base64 -d | jq -r '.number')
     TITLE=$(echo $pull_request | base64 -d | jq -r '.title')
@@ -17,7 +18,7 @@ echo $PULL_REQUESTS | jq -r '.[] | @base64' | while read pull_request ; do
     echo $COMMIT
     echo $NUMBER
     echo $TITLE
-    
+
     # if there is more than 1 tag, the pull request is already included in another release
     if [ $(git tag --contain $COMMIT | grep -i $PACKAGE | wc -l) -le 1 ]; then
         echo "- $TITLE in #$NUMBER" >> $GITHUB_ENV
