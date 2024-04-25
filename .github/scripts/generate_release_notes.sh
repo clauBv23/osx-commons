@@ -2,9 +2,7 @@
 
 printf "Hello world\n"
 
-echo "====================<>"
 PACKAGE=$1
-echo "====================<>"
 
 echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
 echo "## All changes in $PACKAGE" >> $GITHUB_ENV
@@ -34,7 +32,7 @@ echo $PULL_REQUESTS | jq -r '.[] | @base64' | while read pull_request ; do
 done
 echo $GITHUB_ENV
 
-echo "==================================>"
+echo "================END==================>"
 echo "" >> $GITHUB_ENV
 echo "EOF" >> $GITHUB_ENV
 echo $GITHUB_ENV
